@@ -6,10 +6,29 @@
         <p>There aren't any restaurants in the database yet.</p>
     {% endif %}
 
-    {% for restaurant in restaurants %}
-        <ul>
-            <li>{{ restaurant.name }}</li>
-        </ul>
-    {% endfor %}
+    <div class="row">
+        <div class="column">
+            <table>
+                <tr>
+                    <th class="header" colspan="3">Current Database of Restaurants</th>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Avg Rating</th>
+                </tr>
+
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td><a href="{{ url_for('reviews', restaurant_id=restaurant.id) }}">{{ restaurant.name }}</a></td>
+                    <td>{{ restaurant.address }}</td>
+                    <td>{{ restaurant.avg_rating }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
 
 {% endblock %}

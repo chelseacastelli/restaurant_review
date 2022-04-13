@@ -1,0 +1,50 @@
+
+{% extends 'base.html' %}
+
+{% block content%}
+
+
+
+{% if restaurants %}
+    <div class="row">
+        <div class="column">
+            <table>
+                <tr>
+                    <th class="header" colspan="3">Current Database of Restaurants</th>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Avg Rating</th>
+                </tr>
+
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td>{{ restaurant.name }}</td>
+                    <td>{{ restaurant.address }}</td>
+                    <td>{{ restaurant.avg_rating }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+{% endif %}
+
+<h2>Add new restaurant:</h2>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.name.label }}
+        {{ form.name(size=50) }}
+    </p>
+    <p>
+        {{ form.address.label }}
+        {{ form.address(size=50) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+
+
+{% endblock %}

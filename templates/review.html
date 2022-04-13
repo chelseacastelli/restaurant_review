@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+
+{% block content%}
+
+
+    <h2>{{ restaurant.name }}</h2>
+
+    <h3>Reviews:</h3>
+    <ul>
+        {% for review in restaurant.reviews %}
+            <li>{{ review }} - {{ review.reviewer.username }}</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

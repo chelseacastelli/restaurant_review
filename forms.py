@@ -1,4 +1,5 @@
 
+from tokenize import String
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo
@@ -20,5 +21,12 @@ class LoginForm(FlaskForm):
 
 
 class NewRestaurantForm(FlaskForm):
-    name = StringField('Restaurant Name',validators=[DataRequired()])
+    name = StringField('Name',validators=[DataRequired()])
     address = StringField('Address',validators=[DataRequired()])
+    submit = SubmitField('Add')
+
+
+class ReviewForm(FlaskForm):
+    review = StringField('Review', validators=[DataRequired()])
+    rating = StringField('Rating (Out of 10)', validators=[DataRequired()])
+    submit = SubmitField('Submit')
