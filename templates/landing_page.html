@@ -2,14 +2,6 @@
 
 {% block content%}
 
-{% with messages = get_flashed_messages() %}
-	{% if messages %}
-		{% for message in messages %}
-			<p style="font-weight: bold;">{{message}}</p>
-		{% endfor %}
-	{% endif %}
-{% endwith %}
-
     {% if restaurants|length == 0 %}
         <p>There aren't any restaurants in the database yet.</p>
     {% endif %}
@@ -18,11 +10,12 @@
         <div class="column">
             <table>
                 <tr>
-                    <th class="header" colspan="3">Current Database of Restaurants</th>
+                    <th class="header" colspan="4">Current Database of Restaurants</th>
                 </tr>
                 <tr>
                     <th>Name</th>
                     <th>Address</th>
+                    <th>Cuisine</th>
                     <th>Avg Rating</th>
                 </tr>
 
@@ -30,6 +23,7 @@
                 <tr>
                     <td><a href="{{ url_for('reviews', restaurant_id=restaurant.id) }}">{{ restaurant.name }}</a></td>
                     <td>{{ restaurant.address }}</td>
+                    <td>{{ restaurant.cuisine }}</td>
                     <td>{{ restaurant.avg_rating }}</td>
                 </tr>
                 {% endfor %}

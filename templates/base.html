@@ -8,6 +8,25 @@
     <title>Restaurant Review Database</title>
   </head>
   <body>
+    <div class="navbar">
+        🏠 <a href="{{ url_for('index') }}">Home</a>
+        {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% else %}
+        👤 <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }}</a>
+        ↩ <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p style="font-weight: bold; color: red;">{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     {% block content %}
     {% endblock %}
   </body>

@@ -4,6 +4,11 @@ body {
     font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
 }
 
+.navbar {
+    margin: 20px 15px;
+    text-align: right;
+}
+
 /* Table styling */
 table {
     box-sizing: border-box;

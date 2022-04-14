@@ -1,4 +1,4 @@
-from app import db
+from app import *
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,9 +25,9 @@ class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), index=True, unique=False)
     address = db.Column(db.String(120), index=True, unique=False)
+    cuisine = db.Column(db.String(50), index=True, unique=False)
     num_reviews = db.Column(db.Integer, unique=False)
-    sum_reviews = db.Column(db.Integer, unique=False)
-    avg_rating = db.Column(db.Integer, index=True, unique=False)
+    avg_rating = db.Column(db.Float, index=True, unique=False)
     reviews = db.relationship('Review', backref = 'restaurant', lazy = 'dynamic', cascade = "all, delete, delete-orphan")
 
     def __repr__(self):

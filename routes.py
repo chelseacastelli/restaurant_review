@@ -2,6 +2,7 @@
 from app import app, db, login_manager
 from models import *
 from forms import *
+from helper import calculate_average_rating
 
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required
@@ -31,6 +32,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('index'))
         
         else:
+            flash('Incorrect crendetials. Please try again.')
             return redirect('login')
 
     return render_template('login.html', form=form)
@@ -51,7 +53,8 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now registered.')
-        return redirect(url_for('login'))
+        login_user(user)
+        return redirect(url_for('index'))
 
     return render_template('register.html', form=form)
 
@@ -62,16 +65,16 @@ def logout():
   return redirect(url_for('index'))
 
 
-@app.route('/user', methods=["GET", "POST"])
+@app.route('/user/<username>', methods=["GET", "POST"])
 @login_required
-def user():
+def user(username):
     form = NewRestaurantForm(csrf_enabled=False)
 
     if form.validate_on_submit():
-        new_rest = Restaurant(name=form.name.data, address=form.address.data, num_reviews=0, sum_reviews=0, avg_rating=0)
+        new_rest = Restaurant(name=form.name.data, address=form.address.data, cuisine=form.cuisine.data, num_reviews=0, avg_rating=0)
         db.session.add(new_rest)
         db.session.commit()
-        return redirect(url_for('user'))
+        return redirect(url_for('user', username=username))
 
     restaurants = Restaurant.query.all()
     return render_template('user.html', restaurants=restaurants, form=form)
@@ -83,14 +86,24 @@ def reviews(restaurant_id):
     form = ReviewForm(csrf_enabled=False)
 
     if form.validate_on_submit():
-        new_review = Review(rating=int(form.rating.data), text=form.review.data, restaurant_id=restaurant_id, reviewer_id=current_user.id)
-        db.session.add(new_review)
-        db.session.commit()
+        if current_user.is_authenticated:
+            if int(form.rating.data) < 1 or int(form.rating.data) > 5:
+                flash('Please give a rating of 1 to 5 stars.')
+                return redirect(url_for('reviews', restaurant_id=restaurant_id))
 
-        rest.num_reviews += 1
-        rest.sum_reviews += new_review.rating
-        rest.avg_rating = rest.sum_reviews / rest.num_reviews
-        return redirect(url_for('reviews', restaurant_id=restaurant_id))
+            new_review = Review(rating=int(form.rating.data), text=form.review.data, restaurant_id=restaurant_id, reviewer_id=current_user.id)
+            db.session.add(new_review)
+
+            rest.num_reviews += 1
+            rest.avg_rating = round(calculate_average_rating(rest))
+
+            db.session.commit()
+
+            return redirect(url_for('reviews', restaurant_id=restaurant_id))
+
+        else:
+            flash('Please log in or create an account to leave a review.')
+            return redirect(url_for('reviews', restaurant_id=restaurant_id))
 
     return render_template('review.html', restaurant=rest, form=form)
 

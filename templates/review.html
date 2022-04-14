@@ -4,15 +4,36 @@
 {% block content%}
 
 
-    <h2>{{ restaurant.name }}</h2>
+<h2>{{ restaurant.name }} Average Rating: {{ restaurant.avg_rating }}</h2>
+<h4>Cuisine: {{ restaurant.cuisine }}</h4>
 
-    <h4>Reviews:</h4>
-    <ul>
-        {% for review in restaurant.reviews %}
-            <li>{{ review.text }} - {{ review.reviewer.username }}</li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="column">
+            <table>
+                <tr>
+                    <th class="header" colspan="3">Reviews</th>
+                </tr>
+                <tr>
+                    <th>Review</th>
+                    <th>Rating</th>
+                    <th>Reviewer</th>
+                </tr>
+
+                {% for review in restaurant.reviews %}
+                <tr>
+                    <td>{{ review.text }}</td>
+                    <td>{{ review.rating }}</td>
+                    <td>{{ review.reviewer.username }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
     <br>
+
+
     <h4>Add new review:</h4>
     <form method="post">
         {{ form.hidden_tag() }}
@@ -26,6 +47,7 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
+
 
 
 {% endblock %}

@@ -23,10 +23,11 @@ class LoginForm(FlaskForm):
 class NewRestaurantForm(FlaskForm):
     name = StringField('Name',validators=[DataRequired()])
     address = StringField('Address',validators=[DataRequired()])
+    cuisine = StringField('Cuisine', validators=[DataRequired()])
     submit = SubmitField('Add')
 
 
 class ReviewForm(FlaskForm):
     review = StringField('Review', validators=[DataRequired()])
-    rating = StringField('Rating (Out of 10)', validators=[DataRequired()])
+    rating = StringField('Rating (1-5)', validators=[DataRequired()])
     submit = SubmitField('Submit')
