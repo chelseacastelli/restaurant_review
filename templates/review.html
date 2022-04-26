@@ -33,21 +33,22 @@
 
     <br>
 
+    {% if current_user.is_authenticated %}
 
-    <h4>Add new review:</h4>
-    <form method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.review.label }}
-            {{ form.review(size=50) }}
-        </p>
-        <p>
-            {{ form.rating.label }}
-            {{ form.rating(size=50) }}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+        <h4>Add new review:</h4>
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.review.label }}
+                {{ form.review(size=50) }}
+            </p>
+            <p>
+                {{ form.rating.label }}
+                {{ form.rating(size=50) }}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
 
-
+    {% endif %}
 
 {% endblock %}
