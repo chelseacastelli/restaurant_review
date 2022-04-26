@@ -20,6 +20,15 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    @classmethod
+    def is_user_name_taken(cls, username):
+      return db.session.query(db.exists().where(User.username==username)).scalar()
+
+    @classmethod
+    def is_email_taken(cls, email):
+      return db.session.query(db.exists().where(User.email==email)).scalar()
+
+
 
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)

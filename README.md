@@ -22,5 +22,5 @@ A restaurant review site where users can log in/register & either add new locati
 
 
 ## TODO
-- [ ] Implement code that handles when the user tries to register but already exists
+- [x] Implement code that handles when the user tries to register but already exists
 - [ ] Only display the review form when the user is authenticated

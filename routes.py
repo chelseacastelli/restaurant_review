@@ -48,6 +48,15 @@ def register():
     
     form = RegistrationForm(csrf_enabled=False)
     if form.validate_on_submit():
+
+        if User.is_user_name_taken(form.username.data):
+            flash('Username taken')
+            return redirect(url_for('register'))
+        
+        if User.is_email_taken(form.email.data):
+            flash('There is already an account associated with this email')
+            return redirect(url_for('login'))
+           
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
