@@ -13,13 +13,22 @@ When creating your Flask application, make sure to include the following compone
 
 5. **Accounts and Authentication** — Your application should utilize user accounts, require user login to access certain routes, and perform authentication. You can implement your login functionality with Flask-Login or by other means if you prefer.
 
-
 ## Project Objective
 A restaurant review site where users can log in/register & either add new locations to the database or leave reviews on existing restaurants.
+
 
 ## Demo It
 [Demo](https://murmuring-ocean-09139.herokuapp.com/)
 
+# Installation
+1. Clone repo
+
+2. Install with pip:
+```
+$ pip install -r requirements.txt
+```
+
+***
 
 ## TODO
 - [x] Implement code that handles when the user tries to register but already exists
