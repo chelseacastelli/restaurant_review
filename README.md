@@ -33,3 +33,4 @@ $ pip install -r requirements.txt
 ## TODO
 - [x] Implement code that handles when the user tries to register but already exists
 - [x] Only display the review form when the user is authenticated
+- [ ] Have user profile display posted reviews
